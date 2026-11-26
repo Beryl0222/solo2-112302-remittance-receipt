@@ -1,105 +1,820 @@
 {
   "project": "侨批银款核账中的上下款归属与分账",
   "material_nature": "本地合成演练资料",
+  "note": "所有人物、家户、批局和往来均为合成。arrival_order 是收件先后；revealed_at 是研究者在第几步才看到该件，不是业务发生时间。金额以辅币“分”记：银元 1 元 = 100 分。",
+  "currency_units": {
+    "银元": 100
+  },
+  "households": [
+    {
+      "id": "H1",
+      "name": "潭巷陈家",
+      "village": "潭巷",
+      "addressees": [
+        "小兰"
+      ],
+      "aliases": [
+        "小兰"
+      ],
+      "notes": [
+        "收信人小兰；托邻居林禾按回单代取。",
+        "同一日同批局委托同一位邻居代取，不因此与街口陈家并户。"
+      ]
+    },
+    {
+      "id": "H2",
+      "name": "街口陈家",
+      "village": "街口",
+      "addressees": [
+        "兰嫂"
+      ],
+      "aliases": [
+        "兰嫂",
+        "兰"
+      ],
+      "ambiguous_aliases": [
+        "兰"
+      ],
+      "notes": [
+        "收信人兰嫂；托过林禾代领。",
+        "单字“兰”在资料中同时可能指小兰（H1）或兰嫂（H2），须有街口、潭巷等住地或本人署名证据才能归户。",
+        "与潭巷陈家共用代领人林禾，仍分户核账。"
+      ]
+    }
+  ],
+  "ledger_versions": [
+    {
+      "version": "1923-09",
+      "period": "民国十二年九月",
+      "supersedes": null,
+      "note": "批局当年给出的按月账页，已刊出并已被引用；本版本不得改写。",
+      "pages": {
+        "T08": {
+          "title": "民国十二年九月 侨批实收页",
+          "entries": [
+            {
+              "household": "H1",
+              "sealed": "甲七",
+              "amount": {
+                "value": 1500,
+                "currency": "银元"
+              },
+              "status": "signed",
+              "note": "旧账页载甲七实收十五银元"
+            },
+            {
+              "household": "H2",
+              "sealed": "乙二",
+              "amount": {
+                "value": 500,
+                "currency": "银元"
+              },
+              "status": "proxy_unverified",
+              "note": "乙二由林禾代领五银元，并无家户签收"
+            }
+          ],
+          "summary": {
+            "signed": {
+              "value": 1500,
+              "currency": "银元"
+            },
+            "proxy_unverified": {
+              "value": 500,
+              "currency": "银元"
+            },
+            "outstanding": {
+              "value": 0,
+              "currency": "银元"
+            }
+          }
+        }
+      },
+      "revealed_at": 10
+    }
+  ],
   "records": [
     {
       "id": "H1",
       "kind": "家户",
       "text": "潭巷陈家，收信人小兰，托邻居林禾按回单代取。",
       "arrival_order": 1,
-      "references": []
+      "revealed_at": 1,
+      "references": [],
+      "party": "H1",
+      "lines": [
+        {
+          "id": "H1:1",
+          "role": "memo",
+          "text": "潭巷陈家，收信人小兰",
+          "addressee": "小兰"
+        },
+        {
+          "id": "H1:2",
+          "role": "instruction",
+          "text": "托邻居林禾按回单代取",
+          "proxy": "林禾",
+          "note": "代取须凭回单，不表示款项已交家户。"
+        }
+      ],
+      "note": "家户本身，不载金额。"
     },
     {
       "id": "H2",
       "kind": "家户",
       "text": "街口陈家，收信人兰嫂，托过林禾代领。",
       "arrival_order": 2,
-      "references": []
+      "revealed_at": 1,
+      "references": [],
+      "party": "H2",
+      "lines": [
+        {
+          "id": "H2:1",
+          "role": "memo",
+          "text": "街口陈家，收信人兰嫂",
+          "addressee": "兰嫂"
+        },
+        {
+          "id": "H2:2",
+          "role": "instruction",
+          "text": "托过林禾代领",
+          "proxy": "林禾",
+          "note": "与 H1 同托一人，但两户各计，不因代领人相同而合并。"
+        }
+      ],
+      "note": "家户本身，不载金额。"
     },
     {
       "id": "L1",
       "kind": "银信",
-      "text": "封标甲七，潭巷。大银一十五元。正文：内付冬米五元，前欠另日再补。",
+      "text": "封标甲七，潭巷。大银一十五元。正文：内付冬米五元，前欠五元照旧，另日再补。",
       "arrival_order": 3,
-      "references": []
+      "revealed_at": 3,
+      "references": [],
+      "party": "H1",
+      "party_basis": [
+        {
+          "record": "L1",
+          "line": "L1:1",
+          "quote": "封标甲七，潭巷。",
+          "evidence": "封标与投递地潭巷指向 H1；H2 在街口。",
+          "rule": "以批封本身的封标和投递地归户"
+        }
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "年份末字漫漶，保留候选；账页题签的民国十二年九月只用于定位账页，不据此改写书信年份。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "L1:1",
+          "role": "face",
+          "text": "封标甲七，潭巷。大银一十五元。",
+          "addressee": "H1",
+          "currency": "银元",
+          "sealed_reference": "甲七",
+          "batch": "甲七",
+          "amount_candidates": [
+            {
+              "value": 1500,
+              "currency": "银元",
+              "reading": "大银一十五元",
+              "status": "clear"
+            },
+            {
+              "value": 1000,
+              "currency": "银元",
+              "reading": "本次十元（另有前欠五元）",
+              "status": "possible"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 1500,
+              "currency": "银元",
+              "note": "封面题“大银一十五元”，是寄出额；封面与正文合读的两种分法见 L1:4，不用展签替代笔迹证据。"
+            }
+          ],
+          "note": "封面金额是寄出额，不等于家户实收；与正文“前欠五元照旧”合读时可作“本次十五元”或“本次十元＋旧欠五元”。"
+        },
+        {
+          "id": "L1:2",
+          "role": "use_intent",
+          "text": "内付冬米五元",
+          "addressee": "H1",
+          "currency": "银元",
+          "purpose": "冬米",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "reading": "五元",
+              "status": "clear"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "note": "信内嘱托用途，是十五元中的一部分，不另计为第二笔来款。"
+            }
+          ],
+          "note": "信内嘱托用途，是十五元中的一部分，不另计为第二笔来款；但“内付”的对象若经复核定到别户，须回看共用收据 B1 的另一批号乙二及原来已分出的金额。"
+        },
+        {
+          "id": "L1:3",
+          "role": "old_debt",
+          "text": "前欠五元照旧，另日再补",
+          "addressee": "H1",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "reading": "前欠五元",
+              "status": "ambiguous_inclusion"
+            }
+          ],
+          "amounts": [],
+          "note": "“前欠五元照旧”是旧欠，可能另账、也可能与本次十五元两笔凑数；录文本身无法判定。不得为了把甲七凑足十五元而把它算入本次来款。"
+        },
+        {
+          "id": "L1:4",
+          "role": "memo",
+          "text": "录文又作“十五元，前欠五元照旧”。",
+          "amount_candidates": [
+            {
+              "value": 1500,
+              "currency": "银元",
+              "reading": "本次带回十五元，前欠五元另账",
+              "status": "ambiguous_reading"
+            },
+            {
+              "value": 1000,
+              "currency": "银元",
+              "reading": "本次十元，与旧欠五元两笔共十五元",
+              "status": "ambiguous_reading"
+            }
+          ],
+          "amounts": [],
+          "note": "展签只写“大银一十五元”，不能替笔迹在两读之间作选择：可能是本次带回十五元，也可能是本次十元加旧欠五元两笔共十五元。封面十五元本身仍可作寄出额，但不据此认定家户实收十五元。",
+          "addressee": "H1"
+        }
+      ],
+      "note": "“大银一十五元”只证明寄出额；家户实收以 R1 为准。"
     },
     {
       "id": "L2",
       "kind": "银信",
       "text": "封标乙二，街口。大银五元。正文：仍托林禾，钱给兰嫂本人。",
       "arrival_order": 4,
-      "references": []
+      "revealed_at": 4,
+      "references": [],
+      "party": "H2",
+      "party_basis": [
+        {
+          "record": "L2",
+          "line": "L2:1",
+          "quote": "封标乙二，街口。",
+          "evidence": "封标乙二与投递地街口指向 H2。",
+          "rule": "以批封本身的封标和投递地归户"
+        },
+        {
+          "record": "L2",
+          "line": "L2:2",
+          "quote": "钱给兰嫂本人",
+          "evidence": "正文指名 H2 收信人兰嫂本人，排除由林禾径交他户。",
+          "rule": "正文指名可排除代领人转手"
+        }
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "与 L1 同批所见年份候选；不据此推定。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "L2:1",
+          "role": "face",
+          "text": "封标乙二，街口。大银五元。",
+          "addressee": "H2",
+          "currency": "银元",
+          "sealed_reference": "乙二",
+          "batch": "乙二",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "reading": "五元",
+              "status": "clear"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "note": "封面“大银五元”。"
+            }
+          ]
+        },
+        {
+          "id": "L2:2",
+          "role": "instruction",
+          "text": "仍托林禾，钱给兰嫂本人。",
+          "addressee": "H2",
+          "proxy": "林禾",
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "委托代领的指示；本人受款的要求是归户证据，不是金额。"
+        }
+      ],
+      "note": "与 L1 合封，但仍是两封两户，不能因合封而并账。"
     },
     {
       "id": "B1",
       "kind": "交接",
       "text": "批局九月初二，合封甲七并乙二，银元贰拾，批局收讫。登记末列另有“同上”，该栏题头是经手人。",
       "arrival_order": 5,
+      "revealed_at": 5,
       "references": [
         "L1",
         "L2"
-      ]
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "批局登记年份与两封同年候选，未定。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "B1:1",
+          "role": "consolidation",
+          "text": "批局九月初二，合封甲七并乙二，银元贰拾，批局收讫。",
+          "currency": "银元",
+          "batch": "甲七+乙二",
+          "sealed_reference": "甲七、乙二",
+          "amount_candidates": [
+            {
+              "value": 2000,
+              "currency": "银元",
+              "reading": "贰拾元",
+              "status": "clear"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 2000,
+              "currency": "银元",
+              "note": "合封控制总数；只用于核对封面对账，不归任何一户。"
+            }
+          ],
+          "note": "合封总额二十银元与两封封面十五加五相符；此数是批局收件总额，不能按总额归到任一户。",
+          "covers": [
+            "甲七",
+            "乙二"
+          ],
+          "allocation": {
+            "甲七": {
+              "value": 1500,
+              "currency": "银元"
+            },
+            "乙二": {
+              "value": 500,
+              "currency": "银元"
+            }
+          },
+          "pointing": "合封登记前缀列明甲七、乙二各自封额，按封标指向分列，不按总额平摊。"
+        },
+        {
+          "id": "B1:2",
+          "role": "registration_note",
+          "text": "登记末列另有“同上”，该栏题头是经手人。",
+          "same_as": {
+            "raw": "同上",
+            "column": "经手人",
+            "target": null,
+            "resolved": false,
+            "note": "“同上”回指经手人栏，不是汇款人、路费或上一笔金额。"
+          },
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "“同上”不能当作金额或汇款人的回指；不得据此把两封金额相加或归并。",
+          "pointing": "题头：经手人"
+        }
+      ],
+      "note": "批局合封登记；两封仍分户核。"
     },
     {
       "id": "P1",
       "kind": "交接",
       "text": "初四，林禾领合封全部。首录断为“余一封五／同上，兰收”，封标未抄入。",
       "arrival_order": 6,
+      "revealed_at": 6,
       "references": [
         "B1"
-      ]
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "与其他件同批，年份候选并存。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "P1:1",
+          "role": "proxy_pickup",
+          "text": "初四，林禾领合封全部。",
+          "proxy": "林禾",
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "林禾领走合封全部；这是代领，不是家户签收，也不含各封金额。",
+          "covers": [
+            "甲七",
+            "乙二"
+          ],
+          "pointing": "合封全部，涉及甲乙两封"
+        },
+        {
+          "id": "P1:2",
+          "role": "memo",
+          "text": "首录断为“余一封五／同上，兰收”，封标未抄入。",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": null,
+              "reading": "五",
+              "status": "ambiguous_currency"
+            }
+          ],
+          "amounts": [],
+          "same_as": {
+            "raw": "同上",
+            "column": "unknown",
+            "target": null,
+            "resolved": false,
+            "note": "此处“同上”所指栏目不明，既可能回指上一笔金额，也可能只是转抄旧栏；不作金额依据。"
+          },
+          "note": "“五”后断行，封标未抄入，无法确定属于甲七、乙二还是第三封；“兰”同时可能指小兰（H1）或兰嫂（H2）。同日同批局由林禾一人代领，不能因代领人相同而合并家户。",
+          "pointing": "封标未抄入，仅“兰收”"
+        }
+      ],
+      "note": "代领记录；不能据此认定任何一户收讫。",
+      "party": null
     },
     {
       "id": "P2",
       "kind": "交接",
       "text": "底联，初五另寄五／【不清】。该栏为原寄币种，非前一行银元栏。",
       "arrival_order": 7,
+      "revealed_at": 7,
       "references": [
         "P1"
-      ]
+      ],
+      "lines": [
+        {
+          "id": "P2:1",
+          "role": "stub",
+          "text": "底联，初五另寄五／【不清】。该栏为原寄币种，非前一行银元栏。",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": null,
+              "reading": "五（元）",
+              "status": "ambiguous_currency"
+            },
+            {
+              "value": 50,
+              "currency": null,
+              "reading": "五角",
+              "status": "ambiguous_unit"
+            }
+          ],
+          "amounts": [],
+          "note": "“五”后一字不清，可能是“角”或“元”；原文自注该栏为原寄币种，不是上一行银元栏。没有明确兑换依据，分币种保留，不计入甲七或乙二。复核见到此注后，不改判给甲七。",
+          "pointing": "底联另栏，原寄币种",
+          "awaiting": true
+        }
+      ],
+      "note": "币种与单位都不清，只保留候选。"
     },
     {
       "id": "R1",
       "kind": "收据",
       "text": "初五，潭巷小兰，“只到拾元银元，余问批局”。封背可见甲七。",
       "arrival_order": 8,
+      "revealed_at": 8,
       "references": [
         "L1",
         "P1"
-      ]
+      ],
+      "party": "H1",
+      "party_basis": [
+        {
+          "record": "R1",
+          "line": "R1:1",
+          "quote": "潭巷小兰",
+          "evidence": "住地潭巷加收信人名小兰，共同指向 H1；单凭“小兰”或“兰”不足以与 H2 区分。",
+          "rule": "住地＋姓名共同归户"
+        },
+        {
+          "record": "R1",
+          "line": "R1:3",
+          "quote": "封背可见甲七",
+          "evidence": "封背批注把此收据系到 L1 的甲七封。",
+          "rule": "封背封标可把收据系到具体批封"
+        }
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "与其他件同批。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "R1:1",
+          "role": "signoff",
+          "text": "初五，潭巷小兰，“只到拾元银元，余问批局”。",
+          "addressee": "H1",
+          "signature": "小兰",
+          "currency": "银元",
+          "sealed_reference": "甲七",
+          "batch": "甲七",
+          "genuine_delivery": true,
+          "amount_candidates": [
+            {
+              "value": 1000,
+              "currency": "银元",
+              "reading": "拾元银元",
+              "status": "clear"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 1000,
+              "currency": "银元",
+              "note": "家户自书只到十银元；这是已经签收的家户实收，不是封面十五元。"
+            }
+          ],
+          "note": "“只到”说明未足额；不得用封面十五元或批局合封二十元补齐。"
+        },
+        {
+          "id": "R1:2",
+          "role": "outstanding_note",
+          "text": "余问批局",
+          "addressee": "H1",
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "余款五银元须待批局回单或复核，不计家户实收。"
+        },
+        {
+          "id": "R1:3",
+          "role": "seal",
+          "text": "封背可见甲七。",
+          "sealed_reference": "甲七",
+          "batch": "甲七",
+          "amount_candidates": [],
+          "amounts": []
+        }
+      ],
+      "note": "甲七这一封的家户签收证据；与 L2 的乙二无关。"
     },
     {
       "id": "R2",
       "kind": "收据",
       "text": "初六，乙二封口存回条，“街口我家收到银元五元”，署兰。",
       "arrival_order": 9,
+      "revealed_at": 9,
       "references": [
         "L2",
         "P1",
         "P2"
-      ]
+      ],
+      "party": "H2",
+      "party_basis": [
+        {
+          "record": "R2",
+          "line": "R2:1",
+          "quote": "街口我家收到银元五元",
+          "evidence": "回条自述“街口我家”，与 H2 的街口住地相符；单字署“兰”同时可能指小兰，不能只凭别名归户，须有街口这一住地证据。",
+          "rule": "别名须另有住地或本人署名佐证才能归户"
+        }
+      ],
+      "year_candidates": [
+        {
+          "raw": "民国十二／十三年",
+          "value_candidates": [
+            1923,
+            1924
+          ],
+          "chosen": null,
+          "status": "unresolved",
+          "note": "与其他件同批。"
+        }
+      ],
+      "true_month": 9,
+      "lines": [
+        {
+          "id": "R2:1",
+          "role": "signoff",
+          "text": "初六，乙二封口存回条，“街口我家收到银元五元”，署兰。",
+          "addressee": "H2",
+          "signature": "兰",
+          "currency": "银元",
+          "sealed_reference": "乙二",
+          "batch": "乙二",
+          "genuine_delivery": true,
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "reading": "五元",
+              "status": "clear"
+            }
+          ],
+          "amounts": [
+            {
+              "value": 500,
+              "currency": "银元",
+              "note": "封口回条为家户收讫凭据；不是林禾代领记录。"
+            }
+          ],
+          "note": "此五银元属乙二、H2，与甲七未到的五银元互相独立；即使 H1 尚欠，也不妨碍 H2 入账。"
+        }
+      ],
+      "note": "乙二的家户签收；初六晚于初四代领。"
     },
     {
       "id": "M1",
       "kind": "引用",
       "text": "九月引用号T08，旧账页载甲七实收十五银元，乙二由林禾代领五银元并无家户签收。",
       "arrival_order": 10,
+      "revealed_at": 10,
       "references": [
         "L1",
         "L2",
         "P1",
         "R1"
-      ]
+      ],
+      "citation": {
+        "ledger": "1923-09",
+        "page": "T08",
+        "quoted": [
+          {
+            "household": "H1",
+            "sealed": "甲七",
+            "amount": {
+              "value": 1500,
+              "currency": "银元"
+            },
+            "status": "signed"
+          },
+          {
+            "household": "H2",
+            "sealed": "乙二",
+            "amount": {
+              "value": 500,
+              "currency": "银元"
+            },
+            "status": "proxy_unverified"
+          }
+        ],
+        "note": "引用时 R2 尚未发现；两条引用都只凭当时的账页和已见收据。"
+      },
+      "lines": [
+        {
+          "id": "M1:1",
+          "role": "memo",
+          "text": "九月引用号T08，旧账页载甲七实收十五银元，乙二由林禾代领五银元并无家户签收。",
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "引用记录不另加金额；其分账随账页版本更新而受复核，但原文保留不删。"
+        }
+      ],
+      "note": "被 X1 复核的研究引用。"
     },
     {
       "id": "X1",
       "kind": "复核",
       "text": "复看底联：“五”后疑为“角”或“元”，不能据此归到甲七；乙二封口的初六回条是另页新发现。",
       "arrival_order": 11,
+      "revealed_at": 11,
       "references": [
         "P2",
         "R2"
-      ]
+      ],
+      "revision": {
+        "target": "M1",
+        "changes": [
+          {
+            "household": "H1",
+            "sealed": "甲七",
+            "field": "amount",
+            "from": {
+              "value": 1500,
+              "currency": "银元"
+            },
+            "to": {
+              "value": 1000,
+              "currency": "银元"
+            },
+            "because": [
+              "R1"
+            ]
+          },
+          {
+            "household": "H2",
+            "sealed": "乙二",
+            "field": "status",
+            "from": "proxy_unverified",
+            "to": "signed",
+            "because": [
+              "R2"
+            ]
+          }
+        ],
+        "note": "底联的“五”仍不归甲七；甲七的十银元以 R1 为据，乙二的五银元以 R2 为据。",
+        "reopen": [
+          {
+            "line": "L1:2",
+            "field": "amounts",
+            "to": [],
+            "note": "若复核改判“内付五元”的对象，此行的已分金额先归零重算，须回看共用收据 B1 的乙二批号及 R1 已分出的十银元。"
+          }
+        ],
+        "reopen_note": "重开 L1:2 不自动改动 R1 的十银元，也不动乙二已签收的五银元；两者来源独立。"
+      },
+      "lines": [
+        {
+          "id": "X1:1",
+          "role": "memo",
+          "text": "复看底联：“五”后疑为“角”或“元”，不能据此归到甲七。",
+          "amount_candidates": [
+            {
+              "value": 500,
+              "currency": null,
+              "reading": "五（元）",
+              "status": "ambiguous_currency"
+            },
+            {
+              "value": 50,
+              "currency": null,
+              "reading": "五角",
+              "status": "ambiguous_unit"
+            }
+          ],
+          "amounts": [],
+          "note": "复核不替笔迹作选择；P2 的候选原样保留，甲七未到部分仍待批局回单。"
+        },
+        {
+          "id": "X1:2",
+          "role": "memo",
+          "text": "乙二封口的初六回条是另页新发现。",
+          "sealed_reference": "乙二",
+          "batch": "乙二",
+          "amount_candidates": [],
+          "amounts": [],
+          "note": "R2 为家户签收；此前账页把乙二列为无签收，须更正。"
+        }
+      ],
+      "note": "复核件不改写原记录，只触发重新分账并标出引用差异。"
     }
   ]
 }
